@@ -49,12 +49,14 @@
             --fluid-3xl: clamp(1.75rem, 1.25rem + 3vw, 3.5rem);
         }
 
-        body {
+        html, body {
             background-color: theme('colors.background');
             color: theme('colors.text');
             font-size: var(--fluid-base);
             line-height: 1.8;
             overflow-x: hidden;
+            width: 100%;
+            position: relative;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -107,7 +109,7 @@
     <header class="fixed w-full z-50 glass-panel py-4 px-6 md:px-12 transition-all duration-300" id="header">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="font-serif font-medium text-fluid-sm tracking-wider text-primary">
-                <span class="text-unit">情報変換ヒーリング</span> <span class="text-unit text-xs ml-2 opacity-70">マルシェ体験セッション</span>
+                <span class="text-unit">情報変換ヒーリング</span> <span class="text-xs ml-2 opacity-70 hidden sm:inline-block">マルシェ体験セッション</span>
             </div>
             <a href="#reservation" class="hidden md:inline-flex items-center bg-primary text-white px-6 py-2.5 rounded-full text-sm tracking-wide hover:bg-opacity-90 transition-all duration-300">
                 <span class="text-unit">体験予約はこちら</span>
@@ -167,19 +169,19 @@
                     <ul class="space-y-6 text-fluid-base text-gray-600">
                         <li class="flex items-start">
                             <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span class="text-unit">「なんとなくずっと重い」</span></div>
+                            <div><span>「なんとなくずっと重い」</span></div>
                         </li>
                         <li class="flex items-start">
                             <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span class="text-unit">「疲れが抜けない」</span></div>
+                            <div><span>「疲れが抜けない」</span></div>
                         </li>
                         <li class="flex items-start">
                             <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span class="text-unit">「気分や身体が安定しない」</span></div>
+                            <div><span>「気分や身体が安定しない」</span></div>
                         </li>
                         <li class="flex items-start">
                             <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span class="text-unit">「病院では異常なしと言われたけどつらい」</span></div>
+                            <div><span>「病院では異常なしと言われたけどつらい」</span></div>
                         </li>
                     </ul>
                 </div>
@@ -192,11 +194,11 @@
                     <ul class="space-y-6 text-fluid-base text-gray-600">
                         <li class="flex items-start">
                             <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span class="text-unit">「直感をもっとクリアにしたい」</span></div>
+                            <div><span>「直感をもっとクリアにしたい」</span></div>
                         </li>
                         <li class="flex items-start">
                             <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span class="text-unit">「見えない世界や感覚に少し興味がある」</span></div>
+                            <div><span>「見えない世界や感覚に少し興味がある」</span></div>
                         </li>
                     </ul>
                 </div>
@@ -217,8 +219,18 @@
             <div class="space-y-8 text-fluid-base text-gray-600 leading-relaxed gsap-fade-up">
                 <p>
                     <span class="text-unit">強く押したり揉んだりするのではなく、</span><br class="hidden md:block">
-                    <span class="text-unit">身体・感覚・反応に影響している</span><span class="text-unit">“情報”にアプローチする施術です。</span>
+                    <span>身体・感覚・反応に影響している“情報”にアプローチする施術です。</span>
                 </p>
+
+                <!-- 画像配置スペース 1 & 2 (アプローチ・施術・ヒアリングのイメージ) -->
+                <div class="grid md:grid-cols-2 gap-6 my-10">
+                    <div class="aspect-video rounded-2xl overflow-hidden shadow-sm relative bg-gray-100">
+                        <img src="Gemini_Generated_Image_tn8227tn8227tn82.jpg" alt="施術イメージ" class="w-full h-full object-cover">
+                    </div>
+                    <div class="aspect-video rounded-2xl overflow-hidden shadow-sm relative bg-gray-100">
+                        <img src="Gemini_Generated_Image_cvmbz6cvmbz6cvmb.jpg" alt="ヒアリングイメージ" class="w-full h-full object-cover object-top">
+                    </div>
+                </div>
                 
                 <div class="bg-white p-8 md:p-10 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] my-12">
                     <p class="font-medium text-primary text-fluid-lg mb-4">
@@ -231,7 +243,7 @@
                 </div>
                 
                 <p>
-                    <span class="text-unit">それを実際に体験していただく場が、</span><span class="text-unit">今回のマルシェです。</span>
+                    <span>それを実際に体験していただく場が、今回のマルシェです。</span>
                 </p>
             </div>
             
@@ -288,6 +300,12 @@
                         <h4 class="font-serif text-fluid-xl text-primary mb-6">
                             <span class="text-unit">体験で感じられる変化（例）</span>
                         </h4>
+                        
+                        <!-- 画像配置スペース 3 (スッキリした・リフレッシュしたイメージ) -->
+                        <div class="mb-8 rounded-2xl overflow-hidden shadow-sm relative bg-gray-100 h-64 md:h-80">
+                            <img src="Gemini_Generated_Image_wisu3ywisu3ywisu.jpg" alt="リフレッシュしたイメージ" class="w-full h-full object-cover object-center">
+                        </div>
+
                         <div class="flex flex-wrap gap-3">
                             <span class="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-fluid-sm text-gray-600 shadow-sm"><span class="text-unit">身体が軽くなる</span></span>
                             <span class="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-fluid-sm text-gray-600 shadow-sm"><span class="text-unit">呼吸がしやすくなる</span></span>
@@ -417,14 +435,21 @@
                 </p>
                 
                 <p class="text-sm text-gray-500 leading-relaxed max-w-2xl mx-auto mb-8">
-                    <span class="text-unit">情報変換ヒーリングは、未経験からでも学べる体系として提供されています。</span><span class="text-unit">「感覚を整える技術」「情報を捉える技術」「状態を変化させる技術」などが含まれており、</span><span class="text-unit">興味がある方は“受ける側”から“扱う側”へ進むことも可能です。</span>
+                    情報変換ヒーリングは、未経験からでも学べる体系として提供されています。<br>
+                    「感覚を整える技術」「情報を捉える技術」「状態を変化させる技術」などが含まれており、<br>
+                    興味がある方は“受ける側”から“扱う側”へ進むことも可能です。
                 </p>
+
+                <!-- 画像配置スペース 4 (対話・学ぶイメージ) -->
+                <div class="max-w-2xl mx-auto mb-10 rounded-2xl overflow-hidden shadow-sm relative bg-gray-100 aspect-[21/9] md:aspect-video">
+                    <img src="Gemini_Generated_Image_nbtzaonbtzaonbtz.jpg" alt="対話・学ぶイメージ" class="w-full h-full object-cover object-center">
+                </div>
                 
                 <div class="bg-white/60 inline-block p-6 rounded-2xl text-left border border-gray-100 text-sm text-gray-600 shadow-sm">
                     <h5 class="font-medium text-gray-800 mb-2">さらに深く知りたい方へ</h5>
                     <p class="mb-3">
-                        <span class="text-unit">もっと理解したい・自分に向いているか知りたいと感じた方には、</span><br>
-                        <span class="text-unit">情報変換ヒーリング協会の無料オンラインセミナーなど、公式の学びの場をご案内しています。</span>
+                        もっと理解したい・自分に向いているか知りたいと感じた方には、<br>
+                        情報変換ヒーリング協会の無料オンラインセミナーなど、公式の学びの場をご案内しています。
                     </p>
                     <ul class="text-xs text-gray-400 space-y-1">
                         <li>※マルシェでの販売は行いません。</li>
@@ -449,8 +474,8 @@
             
             <p class="text-fluid-base text-gray-100/90 mb-12 leading-loose">
                 <span class="text-unit">「少し気になる」</span><span class="text-unit">「自分にも変化があるか試したい」</span><br>
-                <span class="text-unit">その感覚があるなら、まずは気軽に受けてみてください。</span><br>
-                <span class="text-unit">マルシェでお会いできるのを楽しみにしています。</span>
+                その感覚があるなら、まずは気軽に受けてみてください。<br>
+                マルシェでお会いできるのを楽しみにしています。
             </p>
             
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
@@ -465,7 +490,7 @@
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-400 py-10 text-center">
         <div class="max-w-7xl mx-auto px-6">
-            <p class="text-sm tracking-widest">&copy; 情報変換ヒーリング All Rights Reserved.</p>
+            <p class="text-sm tracking-widest">情報変換ヒーリング マルシェ体験セッション</p>
         </div>
     </footer>
 
