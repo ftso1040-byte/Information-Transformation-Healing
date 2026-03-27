@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情報変換ヒーリング マルシェ体験セッション</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5C7A89', // 少し透明感のあるブルーグレー
+                        secondary: '#9FB5C4',
+                        accent: '#C8A98B', // 肌馴染みの良いサンドベージュ
+                        background: '#FCFCFC',
+                        text: '#444444',
+                        light: '#F4F7F9'
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        serif: ['"Noto Serif JP"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* Typography & Fluid Settings */
+        :root {
+            --fluid-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+            --fluid-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+            --fluid-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+            --fluid-lg: clamp(1.125rem, 0.95rem + 0.875vw, 1.35rem);
+            --fluid-xl: clamp(1.35rem, 1.2rem + 1.2vw, 1.75rem);
+            --fluid-2xl: clamp(1.5rem, 1.25rem + 2vw, 2.5rem);
+            --fluid-3xl: clamp(1.75rem, 1.25rem + 3vw, 3.5rem);
+        }
+
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.text');
+            font-size: var(--fluid-base);
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 文字の泣き（不自然な改行）を防ぐ魔法のクラス */
+        .text-unit {
+            display: inline-block;
+            white-space: nowrap;
+            vertical-align: top;
+        }
+
+        /* Fluid Typography Classes */
+        .text-fluid-xs { font-size: var(--fluid-xs); }
+        .text-fluid-sm { font-size: var(--fluid-sm); }
+        .text-fluid-base { font-size: var(--fluid-base); }
+        .text-fluid-lg { font-size: var(--fluid-lg); }
+        .text-fluid-xl { font-size: var(--fluid-xl); line-height: 1.5; }
+        .text-fluid-2xl { font-size: var(--fluid-2xl); line-height: 1.4; }
+        .text-fluid-3xl { font-size: var(--fluid-3xl); line-height: 1.3; }
+
+        /* Custom Utilities */
+        .glass-panel {
+            background: rgba(252, 252, 252, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        /* Initial state for GSAP animations */
+        .gsap-fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .gsap-fade-in {
+            opacity: 0;
+        }
+
+        /* 柔らかなグラデーション背景 */
+        .bg-gradient-soft {
+            background: linear-gradient(135deg, theme('colors.light') 0%, #ffffff 100%);
+        }
+        
+        .bg-gradient-accent {
+            background: linear-gradient(135deg, theme('colors.background') 0%, #fcf8f5 100%);
+        }
+    </style>
+</head>
+<body class="font-sans font-light">
+
+    <!-- Header -->
+    <header class="fixed w-full z-50 glass-panel py-4 px-6 md:px-12 transition-all duration-300" id="header">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="font-serif font-medium text-fluid-sm tracking-wider text-primary">
+                <span class="text-unit">情報変換ヒーリング</span> <span class="text-unit text-xs ml-2 opacity-70">マルシェ体験セッション</span>
+            </div>
+            <a href="#reservation" class="hidden md:inline-flex items-center bg-primary text-white px-6 py-2.5 rounded-full text-sm tracking-wide hover:bg-opacity-90 transition-all duration-300">
+                <span class="text-unit">体験予約はこちら</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+        <!-- 透明感のある背景画像 -->
+        <div class="absolute inset-0 z-0 gsap-fade-in" style="animation-duration: 2s;">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1920" alt="穏やかな波と光" class="w-full h-full object-cover opacity-[0.15]">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background"></div>
+        </div>
+        
+        <div class="max-w-5xl mx-auto px-6 md:px-12 relative z-10 w-full text-center">
+            <p class="font-serif text-primary text-fluid-lg mb-8 tracking-widest gsap-fade-up">
+                <span class="text-unit">まずは体験してください。</span>
+            </p>
+            <h2 class="font-serif text-fluid-3xl text-gray-800 font-medium mb-10 leading-tight gsap-fade-up" style="animation-delay: 0.1s;">
+                <span class="text-unit">“情報”に触れると、</span><br class="md:hidden">
+                <span class="text-unit">身体や感覚が</span><br class="hidden md:block">
+                <span class="text-unit">変わることがあります。</span>
+            </h2>
+            
+            <div class="inline-block bg-white/60 backdrop-blur-sm border border-primary/10 rounded-2xl p-8 mb-12 gsap-fade-up shadow-sm" style="animation-delay: 0.2s;">
+                <h1 class="text-fluid-xl text-primary font-medium tracking-wide mb-4">
+                    <span class="text-unit">情報変換ヒーリング</span><br>
+                    <span class="text-unit">マルシェ体験セッション</span>
+                </h1>
+                <p class="text-fluid-base text-gray-600 leading-relaxed">
+                    <span class="text-unit">肩こり・疲れ・自律神経の乱れから、</span><br>
+                    <span class="text-unit">直感・感覚への興味まで。</span><br>
+                    <span class="text-unit">まずは数分で、</span><span class="text-unit">違いを感じてみてください。</span>
+                </p>
+            </div>
+            
+            <div class="gsap-fade-up" style="animation-delay: 0.3s;">
+                <a href="#reservation" class="inline-flex items-center justify-center bg-accent text-white px-10 py-4 rounded-full text-fluid-base tracking-widest hover:bg-opacity-90 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                    <span class="text-unit">体験予約はこちら</span>
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem / Empathy Section -->
+    <section class="py-20 md:py-32 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="grid md:grid-cols-2 gap-16 md:gap-24">
+                
+                <!-- 身体の悩み -->
+                <div class="gsap-fade-up">
+                    <h3 class="font-serif text-fluid-xl text-primary mb-8 border-b border-gray-100 pb-4">
+                        <span class="text-unit">こんな状態が</span><span class="text-unit">続いていませんか？</span>
+                    </h3>
+                    <ul class="space-y-6 text-fluid-base text-gray-600">
+                        <li class="flex items-start">
+                            <span class="text-accent mr-4 opacity-70">◆</span>
+                            <div><span class="text-unit">「なんとなくずっと重い」</span></div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-accent mr-4 opacity-70">◆</span>
+                            <div><span class="text-unit">「疲れが抜けない」</span></div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-accent mr-4 opacity-70">◆</span>
+                            <div><span class="text-unit">「気分や身体が安定しない」</span></div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-accent mr-4 opacity-70">◆</span>
+                            <div><span class="text-unit">「病院では異常なしと言われたけどつらい」</span></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 感覚への興味 -->
+                <div class="gsap-fade-up" style="transition-delay: 0.1s;">
+                    <h3 class="font-serif text-fluid-xl text-primary mb-8 border-b border-gray-100 pb-4">
+                        <span class="text-unit">あるいは、こんな感覚を</span><span class="text-unit">感じていませんか？</span>
+                    </h3>
+                    <ul class="space-y-6 text-fluid-base text-gray-600">
+                        <li class="flex items-start">
+                            <span class="text-accent mr-4 opacity-70">◆</span>
+                            <div><span class="text-unit">「直感をもっとクリアにしたい」</span></div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-accent mr-4 opacity-70">◆</span>
+                            <div><span class="text-unit">「見えない世界や感覚に少し興味がある」</span></div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Proposal Section -->
+    <section class="py-24 bg-gradient-soft relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-6 md:px-12 text-center relative z-10">
+            <span class="text-primary/60 font-serif tracking-widest text-sm block mb-6 gsap-fade-up">APPROACH</span>
+            <h3 class="font-serif text-fluid-2xl text-gray-800 mb-10 leading-tight gsap-fade-up">
+                <span class="text-unit">情報変換ヒーリングは、</span><br>
+                <span class="text-unit">背景にある“情報”に</span><span class="text-unit">着目します。</span>
+            </h3>
+            
+            <div class="space-y-8 text-fluid-base text-gray-600 leading-relaxed gsap-fade-up">
+                <p>
+                    <span class="text-unit">強く押したり揉んだりするのではなく、</span><br class="hidden md:block">
+                    <span class="text-unit">身体・感覚・反応に影響している</span><span class="text-unit">“情報”にアプローチする施術です。</span>
+                </p>
+                
+                <div class="bg-white p-8 md:p-10 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] my-12">
+                    <p class="font-medium text-primary text-fluid-lg mb-4">
+                        <span class="text-unit">難しいことは抜きにして、</span><br class="md:hidden">
+                        <span class="text-unit">まずはシンプルにこう考えてください。</span>
+                    </p>
+                    <p class="text-fluid-xl font-serif text-gray-800">
+                        <span class="text-unit">「受ける前と後で、</span><span class="text-unit">自分の状態がどう変わるか」</span>
+                    </p>
+                </div>
+                
+                <p>
+                    <span class="text-unit">それを実際に体験していただく場が、</span><span class="text-unit">今回のマルシェです。</span>
+                </p>
+            </div>
+            
+            <div class="mt-12 gsap-fade-up">
+                <a href="#reservation" class="inline-block border border-primary text-primary px-8 py-3 rounded-full text-fluid-sm tracking-wide hover:bg-primary hover:text-white transition-colors duration-300">
+                    <span class="text-unit">体験を申し込む</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target & Details Section -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
+                <!-- こんな方におすすめ -->
+                <div class="lg:col-span-5 gsap-fade-up">
+                    <div class="bg-gradient-accent p-6 md:p-10 rounded-3xl h-full">
+                        <h4 class="font-serif text-fluid-xl text-primary mb-8">
+                            <span class="text-unit">こんな方に</span><span class="text-unit">おすすめ</span>
+                        </h4>
+                        <ul class="space-y-4 text-fluid-sm text-gray-700">
+                            <li class="flex items-start"><span class="text-accent mr-3 flex-shrink-0">✓</span><span>肩こり、首こり、慢性的な疲れがある</span></li>
+                            <li class="flex items-start"><span class="text-accent mr-3 flex-shrink-0">✓</span><span>自律神経の乱れや、気分の波が気になる</span></li>
+                            <li class="flex items-start"><span class="text-accent mr-3 flex-shrink-0">✓</span><span>病院では異常なしと言われたが不調がある</span></li>
+                            <li class="flex items-start"><span class="text-accent mr-3 flex-shrink-0">✓</span><span>人混みや環境に影響されやすい</span></li>
+                            <li class="flex items-start"><span class="text-accent mr-3 flex-shrink-0">✓</span><span>頭が常に動いていて休まらない</span></li>
+                            <li class="flex items-start"><span class="text-accent mr-3 flex-shrink-0">✓</span><span>直感や感覚をもっとクリアにしたい</span></li>
+                            <li class="flex items-start"><span class="text-accent mr-3 flex-shrink-0">✓</span><span>サイキック・エネルギー・見えない世界に興味がある</span></li>
+                            <li class="flex items-start"><span class="text-accent mr-3 flex-shrink-0">✓</span><span>家族や大切な人に、自分でも何かしてあげたいと思うことがある</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 詳細と変化 -->
+                <div class="lg:col-span-7 space-y-12 lg:space-y-16 mt-8 lg:mt-0">
+                    <div class="gsap-fade-up">
+                        <h4 class="font-serif text-fluid-xl text-primary mb-6">
+                            <span class="text-unit">情報変換ヒーリングとは</span>
+                        </h4>
+                        <p class="text-fluid-base text-gray-600 leading-loose mb-6">
+                            不調や違和感の原因となる“情報”を変換することで、状態の変化を促す技術として提供されています。<br>
+                            対象は幅広く、身体の不調（痛み・こり・疲労）や自律神経の乱れ、感情や思考の状態、原因がはっきりしない違和感などに対して用いられています。
+                        </p>
+                        <p class="text-fluid-base text-gray-800 font-medium p-6 bg-light rounded-xl border-l-4 border-accent">
+                            ただし、ここで大切なのは理屈ではありません。<br>
+                            実際に体験して、自分の感覚で確かめること。<br>
+                            マルシェでは、その入口を体験していただきます。
+                        </p>
+                    </div>
+
+                    <div class="gsap-fade-up">
+                        <h4 class="font-serif text-fluid-xl text-primary mb-6">
+                            <span class="text-unit">体験で感じられる変化（例）</span>
+                        </h4>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-fluid-sm text-gray-600 shadow-sm"><span class="text-unit">身体が軽くなる</span></span>
+                            <span class="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-fluid-sm text-gray-600 shadow-sm"><span class="text-unit">呼吸がしやすくなる</span></span>
+                            <span class="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-fluid-sm text-gray-600 shadow-sm"><span class="text-unit">頭が静かになる</span></span>
+                            <span class="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-fluid-sm text-gray-600 shadow-sm"><span class="text-unit">視界や感覚がクリアになる</span></span>
+                            <span class="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-fluid-sm text-gray-600 shadow-sm"><span class="text-unit">気分が落ち着く・</span><span class="text-unit">前向きになる</span></span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-4">※感じ方には個人差があります</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-24 bg-light">
+        <div class="max-w-5xl mx-auto px-6 md:px-12">
+            <div class="text-center mb-16 gsap-fade-up">
+                <span class="text-primary/60 font-serif tracking-widest text-sm block mb-4">MENU</span>
+                <h3 class="font-serif text-fluid-2xl text-gray-800">
+                    <span class="text-unit">マルシェ体験メニュー</span>
+                </h3>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 15分コース -->
+                <div class="bg-white rounded-3xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow duration-300 relative overflow-hidden gsap-fade-up">
+                    <div class="absolute top-0 right-0 bg-accent text-white text-xs px-4 py-1 rounded-bl-xl tracking-wider">マルシェ限定</div>
+                    <h4 class="text-fluid-lg text-primary font-medium mb-2">
+                        <span class="text-unit">体験セッション</span>
+                    </h4>
+                    <div class="flex items-end gap-2 mb-6 border-b border-gray-100 pb-6">
+                        <span class="text-3xl font-serif text-gray-800">15<span class="text-lg">分</span></span>
+                        <span class="text-xl font-medium text-accent ml-auto">3,000<span class="text-sm text-gray-500">円</span></span>
+                    </div>
+                    <p class="text-fluid-sm text-gray-500 mb-6">まずは違いを感じてみたい方へ。</p>
+                    <ul class="space-y-3 text-fluid-sm text-gray-700 mb-10">
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">現在の状態ヒアリング（簡単）</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">情報変換ヒーリング体験</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">体験前後の変化チェック</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit text-xs text-gray-400 mt-1">必要に応じたご案内（希望者のみ）</span></li>
+                    </ul>
+                    <a href="#reservation" class="block w-full text-center bg-primary text-white py-3.5 rounded-full text-sm tracking-widest hover:bg-opacity-90 transition-colors">予約する</a>
+                </div>
+
+                <!-- 30分コース -->
+                <div class="bg-white rounded-3xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow duration-300 relative overflow-hidden gsap-fade-up" style="transition-delay: 0.1s;">
+                    <h4 class="text-fluid-lg text-primary font-medium mb-2">
+                        <span class="text-unit">しっかり体験セッション</span>
+                    </h4>
+                    <div class="flex items-end gap-2 mb-6 border-b border-gray-100 pb-6">
+                        <span class="text-3xl font-serif text-gray-800">30<span class="text-lg">分</span></span>
+                        <span class="text-xl font-medium text-accent ml-auto">5,000<span class="text-sm text-gray-500">円</span></span>
+                    </div>
+                    <p class="text-fluid-sm text-gray-500 mb-6">しっかり変化を感じたい方向け。</p>
+                    <ul class="space-y-3 text-fluid-sm text-gray-700 mb-10">
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">より深い状態へのアプローチ</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">複数のテーマ対応（身体＋感情など）</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">変化の確認を丁寧に実施</span></li>
+                    </ul>
+                    <a href="#reservation" class="block w-full text-center bg-white border-2 border-primary text-primary py-3 rounded-full text-sm tracking-widest hover:bg-primary hover:text-white transition-colors mt-auto">予約する</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 bg-white">
+        <div class="max-w-3xl mx-auto px-6 md:px-12">
+            <h3 class="font-serif text-fluid-2xl text-center text-primary mb-16 gsap-fade-up">
+                <span class="text-unit">よくある不安</span>
+            </h3>
+
+            <div class="space-y-6 gsap-fade-up">
+                <!-- FAQ Item 1 -->
+                <div class="border-b border-gray-100 pb-6">
+                    <h4 class="text-fluid-base font-medium text-gray-800 mb-3 flex items-start">
+                        <span class="text-accent font-serif text-lg mr-3">Q.</span>
+                        <span class="text-unit pt-0.5">初めてでも大丈夫ですか？</span>
+                    </h4>
+                    <div class="text-fluid-sm text-gray-600 pl-8 leading-relaxed">
+                        <span class="text-unit">はい。今回の体験は、初めての方向けに設計されています。</span><span class="text-unit">安心してお越しください。</span>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="border-b border-gray-100 pb-6">
+                    <h4 class="text-fluid-base font-medium text-gray-800 mb-3 flex items-start">
+                        <span class="text-accent font-serif text-lg mr-3">Q.</span>
+                        <span class="text-unit pt-0.5">どんな人が受けていますか？</span>
+                    </h4>
+                    <div class="text-fluid-sm text-gray-600 pl-8 leading-relaxed">
+                        <span class="text-unit">身体の不調がある方だけでなく、</span><span class="text-unit">感覚や直感に興味がある方まで幅広く受けられています。</span>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="border-b border-gray-100 pb-6">
+                    <h4 class="text-fluid-base font-medium text-gray-800 mb-3 flex items-start">
+                        <span class="text-accent font-serif text-lg mr-3">Q.</span>
+                        <span class="text-unit pt-0.5">効果はありますか？</span>
+                    </h4>
+                    <div class="text-fluid-sm text-gray-600 pl-8 leading-relaxed">
+                        <span class="text-unit">感じ方には個人差がありますが、</span><span class="text-unit">多くの方が「何かしらの変化」を体感されます。</span><br>
+                        <span class="text-unit">まずはご自身の感覚で確かめてみてください。</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hook (Learn) Section -->
+    <section class="py-20 bg-gray-50 border-t border-gray-100">
+        <div class="max-w-4xl mx-auto px-6 md:px-12 text-center">
+            <div class="gsap-fade-up">
+                <span class="inline-block px-4 py-1.5 bg-gray-200 text-gray-600 text-xs rounded-full mb-6 tracking-widest">NEXT STEP</span>
+                <h3 class="font-serif text-fluid-lg text-gray-800 mb-6">
+                    <span class="text-unit">こんな方は「学ぶ側」に</span><span class="text-unit">向いている可能性があります</span>
+                </h3>
+                
+                <p class="text-fluid-sm text-gray-600 leading-loose mb-8">
+                    <span class="text-unit">体験後に、もしこう感じたら。</span><br>
+                    <span class="text-unit bg-white px-2 py-1 rounded shadow-sm mx-1">「これ、自分でもできたらいいのに」</span>
+                    <span class="text-unit bg-white px-2 py-1 rounded shadow-sm mx-1">「もっと深く理解したい」</span>
+                    <span class="text-unit bg-white px-2 py-1 rounded shadow-sm mx-1">「家族にしてあげたい」</span>
+                </p>
+                
+                <p class="text-sm text-gray-500 leading-relaxed max-w-2xl mx-auto mb-8">
+                    <span class="text-unit">情報変換ヒーリングは、未経験からでも学べる体系として提供されています。</span><span class="text-unit">「感覚を整える技術」「情報を捉える技術」「状態を変化させる技術」などが含まれており、</span><span class="text-unit">興味がある方は“受ける側”から“扱う側”へ進むことも可能です。</span>
+                </p>
+                
+                <div class="bg-white/60 inline-block p-6 rounded-2xl text-left border border-gray-100 text-sm text-gray-600 shadow-sm">
+                    <h5 class="font-medium text-gray-800 mb-2">さらに深く知りたい方へ</h5>
+                    <p class="mb-3">
+                        <span class="text-unit">もっと理解したい・自分に向いているか知りたいと感じた方には、</span><br>
+                        <span class="text-unit">情報変換ヒーリング協会の無料オンラインセミナーなど、公式の学びの場をご案内しています。</span>
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-1">
+                        <li>※マルシェでの販売は行いません。</li>
+                        <li>※希望者には当日ご案内可能です。無理な勧誘は一切ありません。</li>
+                        <li>※まずは体験して、そのうえで判断していただければ大丈夫です。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Closing / CTA Section -->
+    <section id="reservation" class="py-24 md:py-32 bg-primary text-white relative overflow-hidden text-center px-6">
+        <!-- 柔らかな光のエフェクト -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-white opacity-5 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="max-w-4xl mx-auto relative z-10 gsap-fade-up">
+            <h3 class="font-serif text-fluid-2xl mb-8 leading-tight">
+                <span class="text-unit">言葉で理解するより、</span><br class="md:hidden">
+                <span class="text-unit">体験のほうが早い技術です。</span>
+            </h3>
+            
+            <p class="text-fluid-base text-gray-100/90 mb-12 leading-loose">
+                <span class="text-unit">「少し気になる」</span><span class="text-unit">「自分にも変化があるか試したい」</span><br>
+                <span class="text-unit">その感覚があるなら、まずは気軽に受けてみてください。</span><br>
+                <span class="text-unit">マルシェでお会いできるのを楽しみにしています。</span>
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="#" class="w-full sm:w-auto bg-accent text-white px-12 py-4 rounded-full text-fluid-base font-medium tracking-widest hover:bg-opacity-90 transition-all shadow-lg transform hover:-translate-y-1">
+                    <span class="text-unit">体験予約はこちら</span>
+                </a>
+            </div>
+            <p class="text-xs text-white/60 mt-6">※リンク先の予約フォーム（またはLINE等）へ移動します</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-10 text-center">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-sm tracking-widest">&copy; 情報変換ヒーリング All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- GSAP Animations Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // ヘッダーのスクロール効果
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('header');
+                if (window.pageYOffset > 50) {
+                    header.classList.add('shadow-sm');
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                } else {
+                    header.classList.remove('shadow-sm');
+                    header.style.background = 'rgba(252, 252, 252, 0.85)';
+                }
+            });
+
+            // フェードアップアニメーション
+            const fadeUpElements = document.querySelectorAll('.gsap-fade-up');
+            fadeUpElements.forEach((element) => {
+                gsap.to(element, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                });
+            });
+            
+            // シンプルなフェードイン
+            const fadeInElements = document.querySelectorAll('.gsap-fade-in');
+            fadeInElements.forEach((element) => {
+                gsap.to(element, {
+                    opacity: 1,
+                    duration: 1.5,
+                    ease: "power2.inOut"
+                });
+            });
+        });
+    </script>
+</body>
+</html>
