@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>情報変換ヒーリング マルシェ体験セッション</title>
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -31,11 +33,11 @@
         }
     </script>
 
+    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
-        /* Typography & Fluid Settings */
         :root {
             --fluid-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
             --fluid-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
@@ -45,7 +47,7 @@
             --fluid-2xl: clamp(1.5rem, 1.25rem + 2vw, 2.5rem);
             --fluid-3xl: clamp(1.75rem, 1.25rem + 3vw, 3.5rem);
         }
-
+        
         html, body {
             background-color: theme('colors.background');
             color: theme('colors.text');
@@ -57,68 +59,25 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 文字の泣き（不自然な改行）を防ぐ魔法のクラス */
-        .text-unit {
-            display: inline-block;
-            white-space: nowrap;
-            vertical-align: top;
-        }
-
-        /* Custom Utilities */
-        .glass-panel {
-            background: rgba(252, 252, 252, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-        }
-
+        .text-unit { display: inline-block; white-space: nowrap; vertical-align: top; }
+        .glass-panel { background: rgba(252, 252, 252, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.03); }
         .gsap-fade-up { opacity: 0; transform: translateY(30px); }
         .gsap-fade-in { opacity: 0; }
-
         .bg-gradient-soft { background: linear-gradient(135deg, theme('colors.light') 0%, #ffffff 100%); }
         .bg-gradient-accent { background: linear-gradient(135deg, theme('colors.background') 0%, #fcf8f5 100%); }
 
-        /* フォームのカスタマイズ */
-        .custom-input {
-            width: 100%;
-            background-color: #FAFAFA;
-            border: 1px solid #E5E7EB;
-            border-radius: 0.5rem;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            color: theme('colors.text');
-            transition: all 0.3s ease;
-        }
-        .custom-input:focus {
-            outline: none;
-            border-color: theme('colors.primary');
-            background-color: #FFFFFF;
-            box-shadow: 0 0 0 3px rgba(92, 122, 137, 0.1);
-        }
-        .custom-radio {
-            accent-color: theme('colors.accent');
-            width: 1.25rem;
-            height: 1.25rem;
-        }
-
-        /* 送信完了メッセージ用 */
-        #success-message {
-            display: none;
-        }
-        /* 送信中のスピナー */
-        .loader {
-            border: 3px solid rgba(255,255,255,0.3);
-            border-top: 3px solid white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            display: none;
-        }
+        .custom-input { width: 100%; background-color: #FAFAFA; border: 1px solid #E5E7EB; border-radius: 0.5rem; padding: 0.75rem 1rem; font-size: 1rem; color: theme('colors.text'); transition: all 0.3s ease; }
+        .custom-input:focus { outline: none; border-color: theme('colors.primary'); background-color: #FFFFFF; box-shadow: 0 0 0 3px rgba(92, 122, 137, 0.1); }
+        .custom-radio { accent-color: theme('colors.accent'); width: 1.25rem; height: 1.25rem; }
+        
+        #success-message { display: none; }
+        .loader { border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid white; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="font-sans font-light">
 
+    <!-- Header -->
     <header class="fixed w-full z-50 glass-panel py-4 px-6 md:px-12 transition-all duration-300" id="header">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="font-serif font-medium text-fluid-sm tracking-wider text-primary">
@@ -130,47 +89,35 @@
         </div>
     </header>
 
+    <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
         <div class="absolute inset-0 z-0 gsap-fade-in" style="animation-duration: 2s;">
             <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1920" alt="穏やかな波と光" class="w-full h-full object-cover opacity-[0.15]">
             <div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background"></div>
         </div>
-        
         <div class="max-w-5xl mx-auto px-6 md:px-12 relative z-10 w-full text-center">
-            <p class="font-serif text-primary text-fluid-lg mb-8 tracking-widest gsap-fade-up">
-                <span class="text-unit">まずは体験してください。</span>
-            </p>
+            <p class="font-serif text-primary text-fluid-lg mb-8 tracking-widest gsap-fade-up"><span class="text-unit">まずは体験してください。</span></p>
             <h2 class="font-serif text-fluid-3xl text-gray-800 font-medium mb-10 leading-tight gsap-fade-up" style="animation-delay: 0.1s;">
                 <span class="text-unit">“情報”に触れると、</span><br class="md:hidden">
                 <span class="text-unit">身体や感覚が</span><br class="hidden md:block">
                 <span class="text-unit">変わることがあります。</span>
             </h2>
-            
             <div class="inline-block bg-white/60 backdrop-blur-sm border border-primary/10 rounded-2xl p-8 mb-12 gsap-fade-up shadow-sm" style="animation-delay: 0.2s;">
-                <h1 class="text-fluid-xl text-primary font-medium tracking-wide mb-4">
-                    <span class="text-unit">情報変換ヒーリング</span><br>
-                    <span class="text-unit">マルシェ体験セッション</span>
-                </h1>
-                <p class="text-fluid-base text-gray-600 leading-relaxed">
-                    肩こり・疲れ・自律神経の乱れから、<br>
-                    直感・感覚への興味まで。<br>
-                    まずは数分で、違いを感じてみてください。
-                </p>
+                <h1 class="text-fluid-xl text-primary font-medium tracking-wide mb-4"><span class="text-unit">情報変換ヒーリング</span><br><span class="text-unit">マルシェ体験セッション</span></h1>
+                <p class="text-fluid-base text-gray-600 leading-relaxed">肩こり・疲れ・自律神経の乱れから、<br>直感・感覚への興味まで。<br>まずは数分で、違いを感じてみてください。</p>
             </div>
-            
             <div class="gsap-fade-up" style="animation-delay: 0.3s;">
                 <a href="#reservation" class="inline-flex items-center justify-center bg-accent text-white px-10 py-4 rounded-full text-fluid-base tracking-widest hover:bg-opacity-90 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
                     <span class="text-unit">体験予約はこちら</span>
-                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </a>
             </div>
         </div>
     </section>
 
+    <!-- Problem Section -->
     <section class="py-20 md:py-32 bg-white relative">
         <div class="max-w-7xl mx-auto px-6 md:px-12">
             <div class="grid md:grid-cols-2 gap-16 md:gap-24">
-                
                 <div class="gsap-fade-up">
                     <h3 class="font-serif text-fluid-xl text-primary mb-8 border-b border-gray-100 pb-4">
                         <span class="text-unit">こんな状態が</span><span class="text-unit">続いていませんか？</span>
@@ -182,7 +129,6 @@
                         <li class="flex items-start"><span class="text-accent mr-4 opacity-70">◆</span><div><span>「病院では異常なしと言われたけどつらい」</span></div></li>
                     </ul>
                 </div>
-
                 <div class="gsap-fade-up" style="transition-delay: 0.1s;">
                     <h3 class="font-serif text-fluid-xl text-primary mb-8 border-b border-gray-100 pb-4">
                         <span class="text-unit">あるいは、こんな感覚を</span><span class="text-unit">感じていませんか？</span>
@@ -196,6 +142,7 @@
         </div>
     </section>
 
+    <!-- Approach Section -->
     <section class="py-24 bg-gradient-soft relative overflow-hidden">
         <div class="max-w-4xl mx-auto px-6 md:px-12 text-center relative z-10">
             <span class="text-primary/60 font-serif tracking-widest text-sm block mb-6 gsap-fade-up">APPROACH</span>
@@ -228,12 +175,8 @@
                         <span class="text-unit">「受ける前と後で、</span><span class="text-unit">自分の状態がどう変わるか」</span>
                     </p>
                 </div>
-                
-                <p>
-                    <span>それを実際に体験していただく場が、今回のマルシェです。</span>
-                </p>
+                <p><span>それを実際に体験していただく場が、今回のマルシェです。</span></p>
             </div>
-            
             <div class="mt-12 gsap-fade-up">
                 <a href="#reservation" class="inline-block border border-primary text-primary px-8 py-3 rounded-full text-fluid-sm tracking-wide hover:bg-primary hover:text-white transition-colors duration-300">
                     <span class="text-unit">体験を申し込む</span>
@@ -242,6 +185,7 @@
         </div>
     </section>
 
+    <!-- Details Section -->
     <section class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6 md:px-12">
             <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
@@ -265,9 +209,7 @@
 
                 <div class="lg:col-span-7 space-y-12 lg:space-y-16 mt-8 lg:mt-0">
                     <div class="gsap-fade-up">
-                        <h4 class="font-serif text-fluid-xl text-primary mb-6">
-                            <span class="text-unit">情報変換ヒーリングとは</span>
-                        </h4>
+                        <h4 class="font-serif text-fluid-xl text-primary mb-6"><span class="text-unit">情報変換ヒーリングとは</span></h4>
                         <p class="text-fluid-base text-gray-600 leading-loose mb-6">
                             不調や違和感の原因となる“情報”を変換することで、状態の変化を促す技術として提供されています。<br>
                             対象は幅広く、身体の不調（痛み・こり・疲労）や自律神経の乱れ、感情や思考の状態、原因がはっきりしない違和感などに対して用いられています。
@@ -280,9 +222,7 @@
                     </div>
 
                     <div class="gsap-fade-up">
-                        <h4 class="font-serif text-fluid-xl text-primary mb-6">
-                            <span class="text-unit">体験で感じられる変化（例）</span>
-                        </h4>
+                        <h4 class="font-serif text-fluid-xl text-primary mb-6"><span class="text-unit">体験で感じられる変化（例）</span></h4>
                         <div class="mb-8 rounded-2xl overflow-hidden shadow-sm relative bg-gray-100 h-64 md:h-80">
                             <img src="Gemini_Generated_Image_wisu3ywisu3ywisu.jpg" alt="リフレッシュしたイメージ" class="w-full h-full object-cover object-center">
                         </div>
@@ -300,13 +240,12 @@
         </div>
     </section>
 
+    <!-- Menu Section -->
     <section id="menu" class="py-24 bg-light">
         <div class="max-w-5xl mx-auto px-6 md:px-12">
             <div class="text-center mb-16 gsap-fade-up">
                 <span class="text-primary/60 font-serif tracking-widest text-sm block mb-4">MENU</span>
-                <h3 class="font-serif text-fluid-2xl text-gray-800">
-                    <span class="text-unit">マルシェ体験メニュー</span>
-                </h3>
+                <h3 class="font-serif text-fluid-2xl text-gray-800"><span class="text-unit">マルシェ体験メニュー</span></h3>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
@@ -345,6 +284,7 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
     <section class="py-24 bg-white">
         <div class="max-w-3xl mx-auto px-6 md:px-12">
             <h3 class="font-serif text-fluid-2xl text-center text-primary mb-16 gsap-fade-up"><span class="text-unit">よくある不安</span></h3>
@@ -365,6 +305,7 @@
         </div>
     </section>
 
+    <!-- Next Step Section -->
     <section class="py-20 bg-gray-50 border-t border-gray-100">
         <div class="max-w-4xl mx-auto px-6 md:px-12 text-center">
             <div class="gsap-fade-up">
@@ -397,50 +338,43 @@
         </div>
     </section>
 
+    <!-- Reservation Form Section -->
     <section id="reservation" class="py-24 md:py-32 bg-primary text-white relative overflow-hidden">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-white opacity-5 rounded-full blur-3xl pointer-events-none"></div>
-        
         <div class="max-w-4xl mx-auto px-6 md:px-12 relative z-10">
             <div class="text-center mb-16 gsap-fade-up">
                 <h3 class="font-serif text-fluid-2xl mb-6 leading-tight">
                     <span class="text-unit">言葉で理解するより、</span><br class="md:hidden">
                     <span class="text-unit">体験のほうが早い技術です。</span>
                 </h3>
-                <p class="text-fluid-base text-gray-100/90 leading-loose">
-                    「少し気になる」「自分にも変化があるか試したい」<br>
-                    その感覚があるなら、まずは気軽に受けてみてください。<br>
-                    以下のフォームより、体験予約を受け付けております。
-                </p>
             </div>
 
-            <div class="bg-white text-gray-800 rounded-3xl p-8 md:p-12 shadow-xl gsap-fade-up" style="transition-delay: 0.1s;">
-                <h4 class="font-serif text-xl md:text-2xl text-primary text-center mb-8 pb-6 border-b border-gray-100">
-                    体験予約・お問い合わせ
-                </h4>
-                
+            <div class="bg-white text-gray-800 rounded-3xl p-8 md:p-12 shadow-xl gsap-fade-up">
+                <h4 class="font-serif text-xl md:text-2xl text-primary text-center mb-8 pb-6 border-b border-gray-100">体験予約・お問い合わせ</h4>
                 <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { document.getElementById('reservation-form').style.display='none'; document.getElementById('success-message').style.display='block'; window.scrollTo({top: document.getElementById('reservation').offsetTop, behavior: 'smooth'}); }"></iframe>
                 
-                <form id="reservation-form" action="https://script.google.com/macros/s/AKfycbwZ85PSqLkT9t6GWMPO0X1AFw-uxGxl802nlIrTI9c42w-ctt20RiBFiio6wuYF5aE/exec" method="POST" target="hidden_iframe" onsubmit="submitted=true; document.getElementById('submit-btn-text').style.display='none'; document.getElementById('submit-spinner').style.display='block';" class="space-y-8">
+                <!-- URLの貼り付けをお忘れなく！ -->
+                <form id="reservation-form" action="https://script.google.com/macros/s/AKfycbwZ85PSqLkT9t6GWMPO0X1AFw-uxGxl802nlIrTI9c42w-ctt20RiBFiio6wuYF5aE/exec" method="POST" target="hidden_iframe" onsubmit="updateHiddenDate(1); updateHiddenDate(2); updateHiddenDate(3); submitted=true; document.getElementById('submit-btn-text').style.display='none'; document.getElementById('submit-spinner').style.display='block';" class="space-y-8">
                     
                     <div class="grid md:grid-cols-2 gap-8">
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">お名前 <span class="text-red-500 text-xs ml-1">必須</span></label>
-                            <input type="text" id="name" name="name" class="custom-input" placeholder="山田 花子" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">お名前 <span class="text-red-500 text-xs ml-1">必須</span></label>
+                            <input type="text" name="name" class="custom-input" placeholder="山田 花子" required>
                         </div>
                         <div>
-                            <label for="kana" class="block text-sm font-medium text-gray-700 mb-2">ふりがな <span class="text-red-500 text-xs ml-1">必須</span></label>
-                            <input type="text" id="kana" name="kana" class="custom-input" placeholder="やまだ はなこ" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ふりがな <span class="text-red-500 text-xs ml-1">必須</span></label>
+                            <input type="text" name="kana" class="custom-input" placeholder="やまだ はなこ" required>
                         </div>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-8">
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">メールアドレス <span class="text-red-500 text-xs ml-1">必須</span></label>
-                            <input type="email" id="email" name="email" class="custom-input" placeholder="mail@example.com" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">メールアドレス <span class="text-red-500 text-xs ml-1">必須</span></label>
+                            <input type="email" name="email" class="custom-input" placeholder="mail@example.com" required>
                         </div>
                         <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">電話番号</label>
-                            <input type="tel" id="phone" name="phone" class="custom-input" placeholder="090-0000-0000">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">電話番号</label>
+                            <input type="tel" name="phone" class="custom-input" placeholder="090-0000-0000">
                         </div>
                     </div>
 
@@ -448,58 +382,42 @@
                         <label class="block text-sm font-medium text-gray-700 mb-3">ご希望のメニュー <span class="text-red-500 text-xs ml-1">必須</span></label>
                         <div class="space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
                             <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="menu" value="体験セッション（15分：3,000円）" class="custom-radio" required>
-                                <span class="ml-3 text-base">体験セッション（15分：3,000円）</span>
+                                <input type="radio" name="menu" value="体験セッション" class="custom-radio" required>
+                                <span class="ml-3">体験セッション（15分：3,000円）</span>
                             </label>
                             <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="menu" value="しっかり体験セッション（30分：5,000円）" class="custom-radio">
-                                <span class="ml-3 text-base">しっかり体験セッション（30分：5,000円）</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="menu" value="まずは相談だけしたい" class="custom-radio">
-                                <span class="ml-3 text-base">まずは相談だけしたい</span>
+                                <input type="radio" name="menu" value="しっかり体験セッション" class="custom-radio">
+                                <span class="ml-3">しっかり体験セッション（30分：5,000円）</span>
                             </label>
                         </div>
                     </div>
 
-                    <!-- 新しい希望日時セクション（日付と時間の分割版） -->
+                    <!-- 日時選択（1週間制限付き、日付と時間の分割版） -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-3">ご希望の日時</label>
-                        <p class="text-xs text-gray-500 mb-4">※マルシェ開催日時の範囲内でご指定ください。</p>
-                        
+                        <p class="text-xs text-gray-500 mb-4">※本日から1週間先以降の日時をご指定ください。</p>
                         <div class="space-y-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                            <!-- 第1希望 -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">第1希望 <span class="text-red-500 text-xs ml-1">必須</span></label>
                                 <div class="flex gap-2">
                                     <input type="date" id="day1" class="custom-input w-1/2" required onchange="updateHiddenDate(1)">
-                                    <select id="time1" class="custom-input w-1/2" required onchange="updateHiddenDate(1)">
-                                        <option value="">時間を選択</option>
-                                    </select>
+                                    <select id="time1" class="custom-input w-1/2" required onchange="updateHiddenDate(1)"><option value="">時間を選択</option></select>
                                 </div>
                                 <input type="hidden" id="date1" name="date1">
                             </div>
-
-                            <!-- 第2希望 -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">第2希望</label>
                                 <div class="flex gap-2">
                                     <input type="date" id="day2" class="custom-input w-1/2" onchange="updateHiddenDate(2)">
-                                    <select id="time2" class="custom-input w-1/2" onchange="updateHiddenDate(2)">
-                                        <option value="">時間を選択</option>
-                                    </select>
+                                    <select id="time2" class="custom-input w-1/2" onchange="updateHiddenDate(2)"><option value="">時間を選択</option></select>
                                 </div>
                                 <input type="hidden" id="date2" name="date2">
                             </div>
-
-                            <!-- 第3希望 -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">第3希望</label>
                                 <div class="flex gap-2">
                                     <input type="date" id="day3" class="custom-input w-1/2" onchange="updateHiddenDate(3)">
-                                    <select id="time3" class="custom-input w-1/2" onchange="updateHiddenDate(3)">
-                                        <option value="">時間を選択</option>
-                                    </select>
+                                    <select id="time3" class="custom-input w-1/2" onchange="updateHiddenDate(3)"><option value="">時間を選択</option></select>
                                 </div>
                                 <input type="hidden" id="date3" name="date3">
                             </div>
@@ -507,13 +425,13 @@
                     </div>
 
                     <div>
-                        <label for="message" class="block text-sm font-medium text-gray-700 mb-2">現在のお悩みや、当日聞きたいことなど（任意）</label>
-                        <textarea id="message" name="message" rows="4" class="custom-input resize-none" placeholder="肩こりがひどくて... / 少しヒーリングに興味があって... など、お気軽にご記入ください。"></textarea>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">現在のお悩みや、当日聞きたいことなど（任意）</label>
+                        <textarea name="message" rows="4" class="custom-input resize-none" placeholder="肩こりがひどくて... / 少しヒーリングに興味があって... など、お気軽にご記入ください。"></textarea>
                     </div>
 
-                    <div class="pt-6 text-center">
-                        <button type="submit" id="submit-btn" class="w-full md:w-auto inline-flex justify-center items-center bg-accent text-white px-16 py-4 rounded-full text-lg font-medium tracking-widest hover:bg-opacity-90 transition-all shadow-lg transform hover:-translate-y-1">
-                            <span id="submit-btn-text" class="text-unit">この内容で予約を申し込む</span>
+                    <div class="text-center pt-6">
+                        <button type="submit" class="w-full md:w-auto bg-accent text-white px-16 py-4 rounded-full text-lg font-medium tracking-widest shadow-lg transform hover:-translate-y-1 transition-all">
+                            <span id="submit-btn-text">この内容で予約を申し込む</span>
                             <div id="submit-spinner" class="loader"></div>
                         </button>
                     </div>
@@ -523,88 +441,50 @@
                     <div class="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
-                    <h5 class="text-2xl font-serif text-gray-800 mb-4">送信が完了しました</h5>
-                    <p class="text-gray-600 leading-relaxed">
-                        お問い合わせありがとうございます。<br>
-                        内容を確認のうえ、担当者よりご連絡させていただきます。
-                    </p>
+                    <h5 class="text-2xl font-serif mb-4">送信が完了しました</h5>
+                    <p class="text-gray-600">担当者より折り返しご連絡させていただきます。</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-gray-400 py-10 text-center">
-        <div class="max-w-7xl mx-auto px-6">
-            <p class="text-sm tracking-widest">情報変換ヒーリング マルシェ体験セッション</p>
-        </div>
-    </footer>
+    <footer class="bg-gray-900 text-gray-400 py-10 text-center text-sm tracking-widest">情報変換ヒーリング マルシェ体験セッション</footer>
 
     <script>
         var submitted = false;
-
-        // 日付と時間を結合して裏側でセットする関数
+        
+        // 選択された日付と時間を結合して、隠しフィールドにセットする処理
         function updateHiddenDate(num) {
             const day = document.getElementById('day' + num).value;
             const time = document.getElementById('time' + num).value;
-            const hiddenInput = document.getElementById('date' + num);
-            
-            if (day && time) {
-                hiddenInput.value = day + ' ' + time;
-            } else {
-                hiddenInput.value = '';
-            }
+            document.getElementById('date' + num).value = (day && time) ? day + ' ' + time : '';
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            // 時間の選択肢（9:00〜19:30）を30分刻みで自動生成
+            // ★1週間先の日付を計算してカレンダーの最小値に設定する
+            const today = new Date();
+            today.setDate(today.getDate() + 7);
+            const minDate = today.toISOString().split('T')[0];
+            ['day1', 'day2', 'day3'].forEach(id => document.getElementById(id).min = minDate);
+
+            // ★時間のプルダウン（9:00〜19:30）を30分刻みで生成する
             const timeSelects = ['time1', 'time2', 'time3'];
             timeSelects.forEach(id => {
                 const select = document.getElementById(id);
-                if (select) {
-                    for (let h = 9; h <= 19; h++) {
-                        const hour = h.toString().padStart(2, '0');
-                        select.insertAdjacentHTML('beforeend', `<option value="${hour}:00">${hour}:00</option>`);
-                        select.insertAdjacentHTML('beforeend', `<option value="${hour}:30">${hour}:30</option>`);
-                    }
+                for (let h = 9; h <= 19; h++) {
+                    let hour = h.toString().padStart(2, '0');
+                    select.insertAdjacentHTML('beforeend', `<option value="${hour}:00">${hour}:00</option>`);
+                    select.insertAdjacentHTML('beforeend', `<option value="${hour}:30">${hour}:30</option>`);
                 }
             });
 
+            // GSAP アニメーション
             gsap.registerPlugin(ScrollTrigger);
-
-            window.addEventListener('scroll', () => {
-                const header = document.getElementById('header');
-                if (window.pageYOffset > 50) {
-                    header.classList.add('shadow-sm');
-                    header.style.background = 'rgba(255, 255, 255, 0.95)';
-                } else {
-                    header.classList.remove('shadow-sm');
-                    header.style.background = 'rgba(252, 252, 252, 0.85)';
-                }
-            });
-
             const fadeUpElements = document.querySelectorAll('.gsap-fade-up');
-            fadeUpElements.forEach((element) => {
-                gsap.to(element, {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1.2,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: element,
-                        start: "top 85%",
-                        toggleActions: "play none none none"
-                    }
-                });
+            fadeUpElements.forEach((el) => {
+                gsap.to(el, { y: 0, opacity: 1, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } });
             });
-            
-            const fadeInElements = document.querySelectorAll('.gsap-fade-in');
-            fadeInElements.forEach((element) => {
-                gsap.to(element, {
-                    opacity: 1,
-                    duration: 1.5,
-                    ease: "power2.inOut"
-                });
-            });
+            gsap.to('.gsap-fade-in', { opacity: 1, duration: 1.5 });
         });
     </script>
 </body>
