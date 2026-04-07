@@ -17,9 +17,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#5C7A89', // 少し透明感のあるブルーグレー
+                        primary: '#5C7A89',
                         secondary: '#9FB5C4',
-                        accent: '#C8A98B', // 肌馴染みの良いサンドベージュ
+                        accent: '#C8A98B',
                         background: '#FCFCFC',
                         text: '#444444',
                         light: '#F4F7F9'
@@ -67,15 +67,6 @@
             vertical-align: top;
         }
 
-        /* Fluid Typography Classes */
-        .text-fluid-xs { font-size: var(--fluid-xs); }
-        .text-fluid-sm { font-size: var(--fluid-sm); }
-        .text-fluid-base { font-size: var(--fluid-base); }
-        .text-fluid-lg { font-size: var(--fluid-lg); }
-        .text-fluid-xl { font-size: var(--fluid-xl); line-height: 1.5; }
-        .text-fluid-2xl { font-size: var(--fluid-2xl); line-height: 1.4; }
-        .text-fluid-3xl { font-size: var(--fluid-3xl); line-height: 1.3; }
-
         /* Custom Utilities */
         .glass-panel {
             background: rgba(252, 252, 252, 0.85);
@@ -83,24 +74,50 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.03);
         }
 
-        /* Initial state for GSAP animations */
-        .gsap-fade-up {
-            opacity: 0;
-            transform: translateY(30px);
+        .gsap-fade-up { opacity: 0; transform: translateY(30px); }
+        .gsap-fade-in { opacity: 0; }
+
+        .bg-gradient-soft { background: linear-gradient(135deg, theme('colors.light') 0%, #ffffff 100%); }
+        .bg-gradient-accent { background: linear-gradient(135deg, theme('colors.background') 0%, #fcf8f5 100%); }
+
+        /* フォームのカスタマイズ */
+        .custom-input {
+            width: 100%;
+            background-color: #FAFAFA;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            color: theme('colors.text');
+            transition: all 0.3s ease;
         }
-        
-        .gsap-fade-in {
-            opacity: 0;
+        .custom-input:focus {
+            outline: none;
+            border-color: theme('colors.primary');
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(92, 122, 137, 0.1);
+        }
+        .custom-radio {
+            accent-color: theme('colors.accent');
+            width: 1.25rem;
+            height: 1.25rem;
         }
 
-        /* 柔らかなグラデーション背景 */
-        .bg-gradient-soft {
-            background: linear-gradient(135deg, theme('colors.light') 0%, #ffffff 100%);
+        /* 送信完了メッセージ用 */
+        #success-message {
+            display: none;
         }
-        
-        .bg-gradient-accent {
-            background: linear-gradient(135deg, theme('colors.background') 0%, #fcf8f5 100%);
+        /* 送信中のスピナー */
+        .loader {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none;
         }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="font-sans font-light">
@@ -119,7 +136,6 @@
 
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
-        <!-- 透明感のある背景画像 -->
         <div class="absolute inset-0 z-0 gsap-fade-in" style="animation-duration: 2s;">
             <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1920" alt="穏やかな波と光" class="w-full h-full object-cover opacity-[0.15]">
             <div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background"></div>
@@ -141,9 +157,9 @@
                     <span class="text-unit">マルシェ体験セッション</span>
                 </h1>
                 <p class="text-fluid-base text-gray-600 leading-relaxed">
-                    <span class="text-unit">肩こり・疲れ・自律神経の乱れから、</span><br>
-                    <span class="text-unit">直感・感覚への興味まで。</span><br>
-                    <span class="text-unit">まずは数分で、</span><span class="text-unit">違いを感じてみてください。</span>
+                    肩こり・疲れ・自律神経の乱れから、<br>
+                    直感・感覚への興味まで。<br>
+                    まずは数分で、違いを感じてみてください。
                 </p>
             </div>
             
@@ -161,48 +177,27 @@
         <div class="max-w-7xl mx-auto px-6 md:px-12">
             <div class="grid md:grid-cols-2 gap-16 md:gap-24">
                 
-                <!-- 身体の悩み -->
                 <div class="gsap-fade-up">
                     <h3 class="font-serif text-fluid-xl text-primary mb-8 border-b border-gray-100 pb-4">
                         <span class="text-unit">こんな状態が</span><span class="text-unit">続いていませんか？</span>
                     </h3>
                     <ul class="space-y-6 text-fluid-base text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span>「なんとなくずっと重い」</span></div>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span>「疲れが抜けない」</span></div>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span>「気分や身体が安定しない」</span></div>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span>「病院では異常なしと言われたけどつらい」</span></div>
-                        </li>
+                        <li class="flex items-start"><span class="text-accent mr-4 opacity-70">◆</span><div><span>「なんとなくずっと重い」</span></div></li>
+                        <li class="flex items-start"><span class="text-accent mr-4 opacity-70">◆</span><div><span>「疲れが抜けない」</span></div></li>
+                        <li class="flex items-start"><span class="text-accent mr-4 opacity-70">◆</span><div><span>「気分や身体が安定しない」</span></div></li>
+                        <li class="flex items-start"><span class="text-accent mr-4 opacity-70">◆</span><div><span>「病院では異常なしと言われたけどつらい」</span></div></li>
                     </ul>
                 </div>
 
-                <!-- 感覚への興味 -->
                 <div class="gsap-fade-up" style="transition-delay: 0.1s;">
                     <h3 class="font-serif text-fluid-xl text-primary mb-8 border-b border-gray-100 pb-4">
                         <span class="text-unit">あるいは、こんな感覚を</span><span class="text-unit">感じていませんか？</span>
                     </h3>
                     <ul class="space-y-6 text-fluid-base text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span>「直感をもっとクリアにしたい」</span></div>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-accent mr-4 opacity-70">◆</span>
-                            <div><span>「見えない世界や感覚に少し興味がある」</span></div>
-                        </li>
+                        <li class="flex items-start"><span class="text-accent mr-4 opacity-70">◆</span><div><span>「直感をもっとクリアにしたい」</span></div></li>
+                        <li class="flex items-start"><span class="text-accent mr-4 opacity-70">◆</span><div><span>「見えない世界や感覚に少し興味がある」</span></div></li>
                     </ul>
                 </div>
-
             </div>
         </div>
     </section>
@@ -222,13 +217,12 @@
                     <span>身体・感覚・反応に影響している“情報”にアプローチする施術です。</span>
                 </p>
 
-                <!-- 画像配置スペース 1 & 2 (アプローチ・施術・ヒアリングのイメージ) -->
                 <div class="grid md:grid-cols-2 gap-6 my-10">
                     <div class="aspect-video rounded-2xl overflow-hidden shadow-sm relative bg-gray-100">
-                        <img src="Gemini_Generated_Image_tn8227tn8227tn82.png" alt="施術イメージ" class="w-full h-full object-cover">
+                        <img src="Gemini_Generated_Image_tn8227tn8227tn82.jpg" alt="施術イメージ" class="w-full h-full object-cover">
                     </div>
                     <div class="aspect-video rounded-2xl overflow-hidden shadow-sm relative bg-gray-100">
-                        <img src="Gemini_Generated_Image_cvmbz6cvmbz6cvmb.png" alt="ヒアリングイメージ" class="w-full h-full object-cover object-top">
+                        <img src="Gemini_Generated_Image_cvmbz6cvmbz6cvmb.jpg" alt="ヒアリングイメージ" class="w-full h-full object-cover object-top">
                     </div>
                 </div>
                 
@@ -258,7 +252,6 @@
     <!-- Target & Details Section -->
     <section class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6 md:px-12">
-            
             <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
                 <!-- こんな方におすすめ -->
                 <div class="lg:col-span-5 gsap-fade-up">
@@ -300,12 +293,9 @@
                         <h4 class="font-serif text-fluid-xl text-primary mb-6">
                             <span class="text-unit">体験で感じられる変化（例）</span>
                         </h4>
-                        
-                        <!-- 画像配置スペース 3 (スッキリした・リフレッシュしたイメージ) -->
                         <div class="mb-8 rounded-2xl overflow-hidden shadow-sm relative bg-gray-100 h-64 md:h-80">
-                            <img src="Gemini_Generated_Image_wisu3ywisu3ywisu.png" alt="リフレッシュしたイメージ" class="w-full h-full object-cover object-center">
+                            <img src="Gemini_Generated_Image_wisu3ywisu3ywisu.jpg" alt="リフレッシュしたイメージ" class="w-full h-full object-cover object-center">
                         </div>
-
                         <div class="flex flex-wrap gap-3">
                             <span class="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-fluid-sm text-gray-600 shadow-sm"><span class="text-unit">身体が軽くなる</span></span>
                             <span class="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-fluid-sm text-gray-600 shadow-sm"><span class="text-unit">呼吸がしやすくなる</span></span>
@@ -317,7 +307,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -335,37 +324,33 @@
                 <!-- 15分コース -->
                 <div class="bg-white rounded-3xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow duration-300 relative overflow-hidden gsap-fade-up">
                     <div class="absolute top-0 right-0 bg-accent text-white text-xs px-4 py-1 rounded-bl-xl tracking-wider">マルシェ限定</div>
-                    <h4 class="text-fluid-lg text-primary font-medium mb-2">
-                        <span class="text-unit">体験セッション</span>
-                    </h4>
+                    <h4 class="text-fluid-lg text-primary font-medium mb-2"><span class="text-unit">体験セッション</span></h4>
                     <div class="flex items-end gap-2 mb-6 border-b border-gray-100 pb-6">
                         <span class="text-3xl font-serif text-gray-800">15<span class="text-lg">分</span></span>
                         <span class="text-xl font-medium text-accent ml-auto">3,000<span class="text-sm text-gray-500">円</span></span>
                     </div>
                     <p class="text-fluid-sm text-gray-500 mb-6">まずは違いを感じてみたい方へ。</p>
                     <ul class="space-y-3 text-fluid-sm text-gray-700 mb-10">
-                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">現在の状態ヒアリング（簡単）</span></li>
-                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">情報変換ヒーリング体験</span></li>
-                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">体験前後の変化チェック</span></li>
-                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit text-xs text-gray-400 mt-1">必要に応じたご案内（希望者のみ）</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span>現在の状態ヒアリング（簡単）</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span>情報変換ヒーリング体験</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span>体験前後の変化チェック</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-xs text-gray-400 mt-1">必要に応じたご案内（希望者のみ）</span></li>
                     </ul>
                     <a href="#reservation" class="block w-full text-center bg-primary text-white py-3.5 rounded-full text-sm tracking-widest hover:bg-opacity-90 transition-colors">予約する</a>
                 </div>
 
                 <!-- 30分コース -->
                 <div class="bg-white rounded-3xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow duration-300 relative overflow-hidden gsap-fade-up" style="transition-delay: 0.1s;">
-                    <h4 class="text-fluid-lg text-primary font-medium mb-2">
-                        <span class="text-unit">しっかり体験セッション</span>
-                    </h4>
+                    <h4 class="text-fluid-lg text-primary font-medium mb-2"><span class="text-unit">しっかり体験セッション</span></h4>
                     <div class="flex items-end gap-2 mb-6 border-b border-gray-100 pb-6">
                         <span class="text-3xl font-serif text-gray-800">30<span class="text-lg">分</span></span>
                         <span class="text-xl font-medium text-accent ml-auto">5,000<span class="text-sm text-gray-500">円</span></span>
                     </div>
                     <p class="text-fluid-sm text-gray-500 mb-6">しっかり変化を感じたい方向け。</p>
                     <ul class="space-y-3 text-fluid-sm text-gray-700 mb-10">
-                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">より深い状態へのアプローチ</span></li>
-                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">複数のテーマ対応（身体＋感情など）</span></li>
-                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span class="text-unit">変化の確認を丁寧に実施</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span>より深い状態へのアプローチ</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span>複数のテーマ対応（身体＋感情など）</span></li>
+                        <li class="flex items-start"><span class="text-primary mr-2 opacity-50">・</span><span>変化の確認を丁寧に実施</span></li>
                     </ul>
                     <a href="#reservation" class="block w-full text-center bg-white border-2 border-primary text-primary py-3 rounded-full text-sm tracking-widest hover:bg-primary hover:text-white transition-colors mt-auto">予約する</a>
                 </div>
@@ -376,43 +361,19 @@
     <!-- FAQ Section -->
     <section class="py-24 bg-white">
         <div class="max-w-3xl mx-auto px-6 md:px-12">
-            <h3 class="font-serif text-fluid-2xl text-center text-primary mb-16 gsap-fade-up">
-                <span class="text-unit">よくある不安</span>
-            </h3>
-
+            <h3 class="font-serif text-fluid-2xl text-center text-primary mb-16 gsap-fade-up"><span class="text-unit">よくある不安</span></h3>
             <div class="space-y-6 gsap-fade-up">
-                <!-- FAQ Item 1 -->
                 <div class="border-b border-gray-100 pb-6">
-                    <h4 class="text-fluid-base font-medium text-gray-800 mb-3 flex items-start">
-                        <span class="text-accent font-serif text-lg mr-3">Q.</span>
-                        <span class="text-unit pt-0.5">初めてでも大丈夫ですか？</span>
-                    </h4>
-                    <div class="text-fluid-sm text-gray-600 pl-8 leading-relaxed">
-                        <span class="text-unit">はい。今回の体験は、初めての方向けに設計されています。</span><span class="text-unit">安心してお越しください。</span>
-                    </div>
+                    <h4 class="text-fluid-base font-medium text-gray-800 mb-3 flex items-start"><span class="text-accent font-serif text-lg mr-3">Q.</span><span class="text-unit pt-0.5">初めてでも大丈夫ですか？</span></h4>
+                    <div class="text-fluid-sm text-gray-600 pl-8 leading-relaxed">はい。今回の体験は、初めての方向けに設計されています。安心してお越しください。</div>
                 </div>
-
-                <!-- FAQ Item 2 -->
                 <div class="border-b border-gray-100 pb-6">
-                    <h4 class="text-fluid-base font-medium text-gray-800 mb-3 flex items-start">
-                        <span class="text-accent font-serif text-lg mr-3">Q.</span>
-                        <span class="text-unit pt-0.5">どんな人が受けていますか？</span>
-                    </h4>
-                    <div class="text-fluid-sm text-gray-600 pl-8 leading-relaxed">
-                        <span class="text-unit">身体の不調がある方だけでなく、</span><span class="text-unit">感覚や直感に興味がある方まで幅広く受けられています。</span>
-                    </div>
+                    <h4 class="text-fluid-base font-medium text-gray-800 mb-3 flex items-start"><span class="text-accent font-serif text-lg mr-3">Q.</span><span class="text-unit pt-0.5">どんな人が受けていますか？</span></h4>
+                    <div class="text-fluid-sm text-gray-600 pl-8 leading-relaxed">身体の不調がある方だけでなく、感覚や直感に興味がある方まで幅広く受けられています。</div>
                 </div>
-
-                <!-- FAQ Item 3 -->
                 <div class="border-b border-gray-100 pb-6">
-                    <h4 class="text-fluid-base font-medium text-gray-800 mb-3 flex items-start">
-                        <span class="text-accent font-serif text-lg mr-3">Q.</span>
-                        <span class="text-unit pt-0.5">効果はありますか？</span>
-                    </h4>
-                    <div class="text-fluid-sm text-gray-600 pl-8 leading-relaxed">
-                        <span class="text-unit">感じ方には個人差がありますが、</span><span class="text-unit">多くの方が「何かしらの変化」を体感されます。</span><br>
-                        <span class="text-unit">まずはご自身の感覚で確かめてみてください。</span>
-                    </div>
+                    <h4 class="text-fluid-base font-medium text-gray-800 mb-3 flex items-start"><span class="text-accent font-serif text-lg mr-3">Q.</span><span class="text-unit pt-0.5">効果はありますか？</span></h4>
+                    <div class="text-fluid-sm text-gray-600 pl-8 leading-relaxed">感じ方には個人差がありますが、多くの方が「何かしらの変化」を体感されます。<br>まずはご自身の感覚で確かめてみてください。</div>
                 </div>
             </div>
         </div>
@@ -423,34 +384,24 @@
         <div class="max-w-4xl mx-auto px-6 md:px-12 text-center">
             <div class="gsap-fade-up">
                 <span class="inline-block px-4 py-1.5 bg-gray-200 text-gray-600 text-xs rounded-full mb-6 tracking-widest">NEXT STEP</span>
-                <h3 class="font-serif text-fluid-lg text-gray-800 mb-6">
-                    <span class="text-unit">こんな方は「学ぶ側」に</span><span class="text-unit">向いている可能性があります</span>
-                </h3>
-                
+                <h3 class="font-serif text-fluid-lg text-gray-800 mb-6"><span class="text-unit">こんな方は「学ぶ側」に</span><span class="text-unit">向いている可能性があります</span></h3>
                 <p class="text-fluid-sm text-gray-600 leading-loose mb-8">
                     <span class="text-unit">体験後に、もしこう感じたら。</span><br>
                     <span class="text-unit bg-white px-2 py-1 rounded shadow-sm mx-1">「これ、自分でもできたらいいのに」</span>
                     <span class="text-unit bg-white px-2 py-1 rounded shadow-sm mx-1">「もっと深く理解したい」</span>
                     <span class="text-unit bg-white px-2 py-1 rounded shadow-sm mx-1">「家族にしてあげたい」</span>
                 </p>
-                
                 <p class="text-sm text-gray-500 leading-relaxed max-w-2xl mx-auto mb-8">
                     情報変換ヒーリングは、未経験からでも学べる体系として提供されています。<br>
                     「感覚を整える技術」「情報を捉える技術」「状態を変化させる技術」などが含まれており、<br>
                     興味がある方は“受ける側”から“扱う側”へ進むことも可能です。
                 </p>
-
-                <!-- 画像配置スペース 4 (対話・学ぶイメージ) -->
                 <div class="max-w-2xl mx-auto mb-10 rounded-2xl overflow-hidden shadow-sm relative bg-gray-100 aspect-[21/9] md:aspect-video">
-                    <img src="Gemini_Generated_Image_nbtzaonbtzaonbtz.png" alt="対話・学ぶイメージ" class="w-full h-full object-cover object-center">
+                    <img src="Gemini_Generated_Image_nbtzaonbtzaonbtz.jpg" alt="対話・学ぶイメージ" class="w-full h-full object-cover object-center">
                 </div>
-                
                 <div class="bg-white/60 inline-block p-6 rounded-2xl text-left border border-gray-100 text-sm text-gray-600 shadow-sm">
                     <h5 class="font-medium text-gray-800 mb-2">さらに深く知りたい方へ</h5>
-                    <p class="mb-3">
-                        もっと理解したい・自分に向いているか知りたいと感じた方には、<br>
-                        情報変換ヒーリング協会の無料オンラインセミナーなど、公式の学びの場をご案内しています。
-                    </p>
+                    <p class="mb-3">もっと理解したい・自分に向いているか知りたいと感じた方には、<br>情報変換ヒーリング協会の無料オンラインセミナーなど、公式の学びの場をご案内しています。</p>
                     <ul class="text-xs text-gray-400 space-y-1">
                         <li>※マルシェでの販売は行いません。</li>
                         <li>※希望者には当日ご案内可能です。無理な勧誘は一切ありません。</li>
@@ -461,29 +412,109 @@
         </div>
     </section>
 
-    <!-- Closing / CTA Section -->
-    <section id="reservation" class="py-24 md:py-32 bg-primary text-white relative overflow-hidden text-center px-6">
-        <!-- 柔らかな光のエフェクト -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-white opacity-5 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Reservation Form Section (GAS連携版) -->
+    <section id="reservation" class="py-24 md:py-32 bg-primary text-white relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-white opacity-5 rounded-full blur-3xl pointer-events-none"></div>
         
-        <div class="max-w-4xl mx-auto relative z-10 gsap-fade-up">
-            <h3 class="font-serif text-fluid-2xl mb-8 leading-tight">
-                <span class="text-unit">言葉で理解するより、</span><br class="md:hidden">
-                <span class="text-unit">体験のほうが早い技術です。</span>
-            </h3>
-            
-            <p class="text-fluid-base text-gray-100/90 mb-12 leading-loose">
-                <span class="text-unit">「少し気になる」</span><span class="text-unit">「自分にも変化があるか試したい」</span><br>
-                その感覚があるなら、まずは気軽に受けてみてください。<br>
-                マルシェでお会いできるのを楽しみにしています。
-            </p>
-            
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <a href="#" class="w-full sm:w-auto bg-accent text-white px-12 py-4 rounded-full text-fluid-base font-medium tracking-widest hover:bg-opacity-90 transition-all shadow-lg transform hover:-translate-y-1">
-                    <span class="text-unit">体験予約はこちら</span>
-                </a>
+        <div class="max-w-4xl mx-auto px-6 md:px-12 relative z-10">
+            <div class="text-center mb-16 gsap-fade-up">
+                <h3 class="font-serif text-fluid-2xl mb-6 leading-tight">
+                    <span class="text-unit">言葉で理解するより、</span><br class="md:hidden">
+                    <span class="text-unit">体験のほうが早い技術です。</span>
+                </h3>
+                <p class="text-fluid-base text-gray-100/90 leading-loose">
+                    「少し気になる」「自分にも変化があるか試したい」<br>
+                    その感覚があるなら、まずは気軽に受けてみてください。<br>
+                    以下のフォームより、体験予約を受け付けております。
+                </p>
             </div>
-            <p class="text-xs text-white/60 mt-6">※リンク先の予約フォーム（またはLINE等）へ移動します</p>
+
+            <div class="bg-white text-gray-800 rounded-3xl p-8 md:p-12 shadow-xl gsap-fade-up" style="transition-delay: 0.1s;">
+                <h4 class="font-serif text-xl md:text-2xl text-primary text-center mb-8 pb-6 border-b border-gray-100">
+                    体験予約・お問い合わせ
+                </h4>
+                
+                <!-- 画面遷移（リダイレクト）を防ぐための隠しフレーム -->
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { document.getElementById('reservation-form').style.display='none'; document.getElementById('success-message').style.display='block'; window.scrollTo({top: document.getElementById('reservation').offsetTop, behavior: 'smooth'}); }"></iframe>
+                
+                <!-- 
+                ========================================================
+                ↓↓↓↓↓↓ 以下の action のURLを、第3段階で取得したものに書き換えてください ↓↓↓↓↓↓
+                ========================================================
+                -->
+                <form id="reservation-form" action="https://script.google.com/macros/s/AKfycbwZ85PSqLkT9t6GWMPO0X1AFw-uxGxl802nlIrTI9c42w-ctt20RiBFiio6wuYF5aE/exec" method="POST" target="hidden_iframe" onsubmit="submitted=true; document.getElementById('submit-btn-text').style.display='none'; document.getElementById('submit-spinner').style.display='block';" class="space-y-8">
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">お名前 <span class="text-red-500 text-xs ml-1">必須</span></label>
+                            <input type="text" id="name" name="name" class="custom-input" placeholder="山田 花子" required>
+                        </div>
+                        <div>
+                            <label for="kana" class="block text-sm font-medium text-gray-700 mb-2">ふりがな <span class="text-red-500 text-xs ml-1">必須</span></label>
+                            <input type="text" id="kana" name="kana" class="custom-input" placeholder="やまだ はなこ" required>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">メールアドレス <span class="text-red-500 text-xs ml-1">必須</span></label>
+                            <input type="email" id="email" name="email" class="custom-input" placeholder="mail@example.com" required>
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">電話番号</label>
+                            <input type="tel" id="phone" name="phone" class="custom-input" placeholder="090-0000-0000">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-3">ご希望のメニュー <span class="text-red-500 text-xs ml-1">必須</span></label>
+                        <div class="space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="menu" value="体験セッション（15分：3,000円）" class="custom-radio" required>
+                                <span class="ml-3 text-base">体験セッション（15分：3,000円）</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="menu" value="しっかり体験セッション（30分：5,000円）" class="custom-radio">
+                                <span class="ml-3 text-base">しっかり体験セッション（30分：5,000円）</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="menu" value="まずは相談だけしたい" class="custom-radio">
+                                <span class="ml-3 text-base">まずは相談だけしたい</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="date" class="block text-sm font-medium text-gray-700 mb-2">ご希望の日時（第1希望）</label>
+                        <input type="datetime-local" id="date" name="date" class="custom-input">
+                        <p class="text-xs text-gray-500 mt-2">※マルシェ開催日時の範囲内でご指定ください。</p>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-2">現在のお悩みや、当日聞きたいことなど（任意）</label>
+                        <textarea id="message" name="message" rows="4" class="custom-input resize-none" placeholder="肩こりがひどくて... / 少しヒーリングに興味があって... など、お気軽にご記入ください。"></textarea>
+                    </div>
+
+                    <div class="pt-6 text-center">
+                        <button type="submit" id="submit-btn" class="w-full md:w-auto inline-flex justify-center items-center bg-accent text-white px-16 py-4 rounded-full text-lg font-medium tracking-widest hover:bg-opacity-90 transition-all shadow-lg transform hover:-translate-y-1">
+                            <span id="submit-btn-text" class="text-unit">この内容で予約を申し込む</span>
+                            <div id="submit-spinner" class="loader"></div>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- 送信完了後に表示されるメッセージ -->
+                <div id="success-message" class="text-center py-10">
+                    <div class="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h5 class="text-2xl font-serif text-gray-800 mb-4">送信が完了しました</h5>
+                    <p class="text-gray-600 leading-relaxed">
+                        お問い合わせありがとうございます。<br>
+                        内容を確認のうえ、担当者よりご連絡させていただきます。
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -494,8 +525,11 @@
         </div>
     </footer>
 
-    <!-- GSAP Animations Script -->
+    <!-- GSAP Animations & Form Script -->
     <script>
+        // フォームが送信されたかを判定する変数（iframe用）
+        var submitted = false;
+
         document.addEventListener("DOMContentLoaded", () => {
             gsap.registerPlugin(ScrollTrigger);
 
